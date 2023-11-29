@@ -1,0 +1,50 @@
+*** Settings ***
+Documentation       Scrape prices from Amazon
+Library             SeleniumLibrary
+Test Setup          Pause Inbetween
+Test Teardown       Pause Inbetween
+Library             udf_robot.py
+
+
+*** Variables ***
+${SEARCH_TERM}      usb c cable
+${URL}              https://www.amazon.de/s?k=${SEARCH_TERM}
+${BROWSER}          Firefox
+${NUM_PAGES}        5       # number of pages to scrape + 2 (+ 1 because last iteration will not be scraped) and + 1 because when page_num is set to a number, the previous page is being scraped
+
+*** Keywords ***
+Pause Inbetween
+    ${PAUSE_LENGTH}=       Random Pause Length
+    Sleep       ${PAUSE_LENGTH}     #Pauses between Tests
+    Log         Pause length: ${PAUSE_LENGTH}
+
+Go To Page
+    [Arguments]         ${page_number}
+    Go To               ${URL}&page=${page_number}
+    Log                 Page flipped successfully
+
+*** Test Cases ***
+
+Perform Scraping
+    Open Browser     ${URL}      ${BROWSER}
+    Maximize Browser Window
+    Pause Inbetween
+
+    FOR    ${page_num}    IN RANGE    2    ${NUM_PAGES}
+        Pause Inbetween-
+        Wait Until Element Is Visible  xpath=//div[starts-with(@cel_widget_id, 'MAIN-SEARCH_RESULTS')]  #ELEMENT VISIBLE
+
+        @{element_list} =  Get WebElements  xpath=//div[starts-with(@cel_widget_id, 'MAIN-SEARCH_RESULTS')]
+        FOR  ${element}  IN  @{element_list}
+
+             ${html}=    Get Element Attribute    ${element}    outerHTML
+
+             Log    ${html}
+
+        END
+
+        Go To Page    ${page_num}
+
+    END
+
+    [Teardown]      Close Browser

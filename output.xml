@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.9.12 on darwin)" generated="20231123 15:27:34.264" rpa="false" schemaversion="4">
+<suite id="s1" name="Amzn Product Scraping Modified" source="/Users/nikitapiko/Documents/University/WU Wien/SBWL/Data Science/Courses/DS-4/Robotic_Process_Automation/AMZN_Product_Scraping/amzn_product_scraping_modified.txt">
+<test id="s1-t1" name="Perform Scraping" line="28">
+<kw name="Pause Inbetween" type="SETUP">
+<kw name="Random Pause Length" library="udf_robot">
+<var>${PAUSE_LENGTH}</var>
+<doc>Creates a random number in the given interval.
+This way the pauses between the flipping of Amazon pages are randomized to simulate human behavior.</doc>
+<msg timestamp="20231123 15:27:34.481" level="INFO">${PAUSE_LENGTH} = 2.0607590755634644</msg>
+<status status="PASS" starttime="20231123 15:27:34.481" endtime="20231123 15:27:34.481"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>${PAUSE_LENGTH}</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20231123 15:27:36.544" level="INFO">Slept 2 seconds 61 milliseconds</msg>
+<status status="PASS" starttime="20231123 15:27:34.481" endtime="20231123 15:27:36.544"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Pause length: ${PAUSE_LENGTH}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231123 15:27:36.545" level="INFO">Pause length: 2.0607590755634644</msg>
+<status status="PASS" starttime="20231123 15:27:36.545" endtime="20231123 15:27:36.545"/>
+</kw>
+<status status="PASS" starttime="20231123 15:27:34.481" endtime="20231123 15:27:36.545"/>
+</kw>
+<kw name="Open Browser" library="SeleniumLibrary">
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<msg timestamp="20231123 15:27:36.547" level="INFO">Opening browser 'Firefox' to base url 'https://www.amazon.de/s?k=usb c cable'.</msg>
+<status status="PASS" starttime="20231123 15:27:36.546" endtime="20231123 15:27:40.693"/>
+</kw>
+<kw name="Maximize Browser Window" library="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" starttime="20231123 15:27:40.693" endtime="20231123 15:27:41.296"/>
+</kw>
+<kw name="Pause Inbetween">
+<kw name="Random Pause Length" library="udf_robot">
+<var>${PAUSE_LENGTH}</var>
+<doc>Creates a random number in the given interval.
+This way the pauses between the flipping of Amazon pages are randomized to simulate human behavior.</doc>
+<msg timestamp="20231123 15:27:41.297" level="INFO">${PAUSE_LENGTH} = 2.6134955745547908</msg>
+<status status="PASS" starttime="20231123 15:27:41.297" endtime="20231123 15:27:41.297"/>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<arg>${PAUSE_LENGTH}</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<msg timestamp="20231123 15:27:43.911" level="INFO">Slept 2 seconds 613 milliseconds</msg>
+<status status="PASS" starttime="20231123 15:27:41.297" endtime="20231123 15:27:43.911"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Pause length: ${PAUSE_LENGTH}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231123 15:27:43.912" level="INFO">Pause length: 2.6134955745547908</msg>
+<status status="PASS" starttime="20231123 15:27:43.911" endtime="20231123 15:27:43.912"/>
+</kw>
+<status status="PASS" starttime="20231123 15:27:41.296" endtime="20231123 15:27:43.912"/>
+</kw>
+<for flavor="IN RANGE">
+<var>${page_num}</var>
+<value>2</value>
+<value>${NUM_PAGES}</value>
+<iter>
+<var name="${page_num}">2</var>
+<kw name="Pause Inbetween-">
+<msg timestamp="20231123 15:27:43.917" level="FAIL">No keyword with name 'Pause Inbetween-' found. Did you mean:
+    Pause Inbetween</msg>
+<status status="FAIL" starttime="20231123 15:27:43.917" endtime="20231123 15:27:43.917"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="SeleniumLibrary">
+<arg>xpath=//div[starts-with(@cel_widget_id, 'MAIN-SEARCH_RESULTS')]</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="NOT RUN" starttime="20231123 15:27:43.917" endtime="20231123 15:27:43.917"/>
+</kw>
+<kw name="Get WebElements" library="SeleniumLibrary">
+<var>@{element_list}</var>
+<arg>xpath=//div[starts-with(@cel_widget_id, 'MAIN-SEARCH_RESULTS')]</arg>
+<doc>Returns a list of WebElement objects matching the ``locator``.</doc>
+<status status="NOT RUN" starttime="20231123 15:27:43.917" endtime="20231123 15:27:43.917"/>
+</kw>
+<for flavor="IN">
+<var>${element}</var>
+<value>@{element_list}</value>
+<iter>
+<var name="${element}"/>
+<kw name="Get Element Attribute" library="SeleniumLibrary">
+<var>${html}</var>
+<arg>${element}</arg>
+<arg>outerHTML</arg>
+<doc>Returns the value of ``attribute`` from the element ``locator``.</doc>
+<status status="NOT RUN" starttime="20231123 15:27:43.917" endtime="20231123 15:27:43.918"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${html}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20231123 15:27:43.918" endtime="20231123 15:27:43.918"/>
+</kw>
+<status status="NOT RUN" starttime="20231123 15:27:43.917" endtime="20231123 15:27:43.918"/>
+</iter>
+<status status="NOT RUN" starttime="20231123 15:27:43.917" endtime="20231123 15:27:43.918"/>
+</for>
+<kw name="Go To Page">
+<arg>${page_num}</arg>
+<status status="NOT RUN" starttime="20231123 15:27:43.918" endtime="20231123 15:27:43.918"/>
+</kw>
+<status status="FAIL" starttime="20231123 15:27:43.913" endtime="20231123 15:27:43.918"/>
+</iter>
+<status status="FAIL" starttime="20231123 15:27:43.912" endtime="20231123 15:27:43.918"/>
+</for>
+<kw name="Close Browser" library="SeleniumLibrary" type="TEARDOWN">
+<doc>Closes the current browser.</doc>
+<status status="PASS" starttime="20231123 15:27:43.918" endtime="20231123 15:27:44.760"/>
+</kw>
+<status status="FAIL" starttime="20231123 15:27:34.480" endtime="20231123 15:27:44.760">No keyword with name 'Pause Inbetween-' found. Did you mean:
+    Pause Inbetween</status>
+</test>
+<doc>Scrape prices from Amazon</doc>
+<status status="FAIL" starttime="20231123 15:27:34.265" endtime="20231123 15:27:44.761"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Amzn Product Scraping Modified">Amzn Product Scraping Modified</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
